@@ -1,0 +1,7 @@
+.calculator_keys {
+    display: grid;
+}
+
+#seven {
+    background: red
+}
