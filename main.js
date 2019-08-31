@@ -1,11 +1,12 @@
 const nearley = require("nearley");
 const grammar = require("./grammar.js");
+console.log();
 // console.log("OYYYY");
 
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 
 try {
-  parser.feed("123")
+  parser.feed("12.4*4");
   console.log(parser.results);
 } catch (e) {
   console.log(e.message);

@@ -10,17 +10,17 @@ var grammar = {
     {"name": "input", "symbols": ["mulExpr"]},
     {"name": "input", "symbols": ["addExpr"]},
     {"name": "input", "symbols": [{"literal":"("}, "input", {"literal":")"}]},
-    {"name": "mulExpr$subexpression$1", "symbols": [{"literal":"*"}]},
-    {"name": "mulExpr$subexpression$1", "symbols": [{"literal":"/"}]},
-    {"name": "mulExpr", "symbols": ["number", "mulExpr$subexpression$1", "number"]},
-    {"name": "addExpr$subexpression$1", "symbols": [{"literal":"+"}]},
-    {"name": "addExpr$subexpression$1", "symbols": [{"literal":"-"}]},
-    {"name": "addExpr", "symbols": ["number", "addExpr$subexpression$1", "number"]},
-    {"name": "number", "symbols": ["digits", {"literal":"."}, "digits"]},
+    {"name": "mulExpr", "symbols": ["number", "mulOp", "number"], "postprocess": ([fst, op, snd]) => Number(fst) * Number(snd)},
+    {"name": "addExpr", "symbols": ["number", "addOp", "number"], "postprocess": ([fst, op, snd]) => Number(fst) + Number(snd)},
     {"name": "number", "symbols": ["digits"]},
+    {"name": "number", "symbols": ["digits", {"literal":"."}, "digits"], "postprocess": ([fst, dec, snd]) => Number(fst + dec + snd)},
+    {"name": "mulOp", "symbols": [{"literal":"*"}]},
+    {"name": "mulOp", "symbols": [{"literal":"/"}]},
+    {"name": "addOp", "symbols": [{"literal":"+"}]},
+    {"name": "addOp", "symbols": [{"literal":"-"}]},
     {"name": "digits$ebnf$1", "symbols": [/[0-9]/]},
     {"name": "digits$ebnf$1", "symbols": ["digits$ebnf$1", /[0-9]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "digits", "symbols": ["digits$ebnf$1"], "postprocess": data => data[0].join("")}
+    {"name": "digits", "symbols": ["digits$ebnf$1"], "postprocess": data => Number(data[0].join(""))}
 ]
   , ParserStart: "input"
 }
@@ -34,12 +34,13 @@ if (typeof module !== 'undefined'&& typeof module.exports !== 'undefined') {
 },{}],2:[function(require,module,exports){
 const nearley = require("nearley");
 const grammar = require("./grammar.js");
+console.log();
 // console.log("OYYYY");
 
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 
 try {
-  parser.feed("123")
+  parser.feed("12.4*4");
   console.log(parser.results);
 } catch (e) {
   console.log(e.message);
