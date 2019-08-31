@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "watchify main.js -o bundle.js"
+    "watch": "watchify main.js -o bundle.js",
+    "gen_parser": "nearleyc grammar.ne -o grammar.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "lex": "^1.7.9"
+    "nearley": "^2.18.0"
   }
 }
