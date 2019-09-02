@@ -1,9 +1,10 @@
-input -> number | mulExpr | addExpr | "(" input ")"
-mulExpr -> number mulOp number {% ([fst, op, snd]) => Number(fst) * Number(snd) %}
-addExpr -> number addOp number {% ([fst, op, snd]) => Number(fst) + Number(snd) %}
-number -> digits | digits "." digits {% ([fst, dec, snd]) => Number(fst + dec + snd) %}
+@{% const renderToken = "$" %}
 
-mulOp -> "*"  | "/"
-addOp -> "+"  | "-"
-digits -> [0-9]:+ {% data => Number(data[0].join("")) %}
+input -> expression {% data => eval(data[0]) %}
 
+expression -> expression operator number {% data => data.join("") %} | number {% id %}
+
+operator ->  "*" {% id %} | "/" {% id %} | "+" {% id %} | "-" {% id %}
+
+number -> digits {% id %} | digits "." digits {% data => data.join("") %}
+digits -> [0-9]:+ {% data => data[0].join("") %}

@@ -28,7 +28,8 @@ body {
   font-size: 1.7em;
   text-align: right;
   background-color: gray;
-  padding: 10px
+  padding: 10px;
+  min-height: 2em
 }
 
 .calculator_keys {

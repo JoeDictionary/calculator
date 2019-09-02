@@ -5,21 +5,18 @@ function id(x) { return x[0]; }
 var grammar = {
     Lexer: undefined,
     ParserRules: [
-    {"name": "input", "symbols": ["number"]},
-    {"name": "input", "symbols": ["mulExpr"]},
-    {"name": "input", "symbols": ["addExpr"]},
-    {"name": "input", "symbols": [{"literal":"("}, "input", {"literal":")"}]},
-    {"name": "mulExpr", "symbols": ["number", "mulOp", "number"], "postprocess": ([fst, op, snd]) => Number(fst) * Number(snd)},
-    {"name": "addExpr", "symbols": ["number", "addOp", "number"], "postprocess": ([fst, op, snd]) => Number(fst) + Number(snd)},
-    {"name": "number", "symbols": ["digits"]},
-    {"name": "number", "symbols": ["digits", {"literal":"."}, "digits"], "postprocess": ([fst, dec, snd]) => Number(fst + dec + snd)},
-    {"name": "mulOp", "symbols": [{"literal":"*"}]},
-    {"name": "mulOp", "symbols": [{"literal":"/"}]},
-    {"name": "addOp", "symbols": [{"literal":"+"}]},
-    {"name": "addOp", "symbols": [{"literal":"-"}]},
+    {"name": "input", "symbols": ["expression"], "postprocess": data => eval(data[0])},
+    {"name": "expression", "symbols": ["expression", "operator", "number"], "postprocess": data => data.join("")},
+    {"name": "expression", "symbols": ["number"], "postprocess": id},
+    {"name": "operator", "symbols": [{"literal":"*"}], "postprocess": id},
+    {"name": "operator", "symbols": [{"literal":"/"}], "postprocess": id},
+    {"name": "operator", "symbols": [{"literal":"+"}], "postprocess": id},
+    {"name": "operator", "symbols": [{"literal":"-"}], "postprocess": id},
+    {"name": "number", "symbols": ["digits"], "postprocess": id},
+    {"name": "number", "symbols": ["digits", {"literal":"."}, "digits"], "postprocess": data => data.join("")},
     {"name": "digits$ebnf$1", "symbols": [/[0-9]/]},
     {"name": "digits$ebnf$1", "symbols": ["digits$ebnf$1", /[0-9]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "digits", "symbols": ["digits$ebnf$1"], "postprocess": data => Number(data[0].join(""))}
+    {"name": "digits", "symbols": ["digits$ebnf$1"], "postprocess": data => data[0].join("")}
 ]
   , ParserStart: "input"
 }
