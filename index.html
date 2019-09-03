@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- <script>
+      window.MathJax = {
+        "fast-preview": {
+          disabled: true
+        },
+        AuthorInit: function() {
+          MathJax.Hub.Register.StartupHook("End", function() {
+            // RESPONSIBLE FOR SMOOTH ON-THE-RUN MATH-RENDERING
+            MathJax.Hub.processSectionDelay = 0;
+            // const demoRendering = document.getElementById("demoRendering");
+            const source = document.querySelector(".calculator_display");
+            const math = MathJax.Hub.getAllJax("source")[0];
+            // console.log(math);
+            // source.addEventListener("input", function() {
+            //   MathJax.Hub.Queue(["Text", math, source.value]);
+            // });
+          });
+        }
+      };
+    </script> -->
     <script>
       window.MathJax = {
         "fast-preview": {
@@ -9,28 +29,10 @@
         AuthorInit: function() {
           MathJax.Hub.Register.StartupHook("End", function() {
             MathJax.Hub.processSectionDelay = 0;
-            const source = document.querySelector(".calculator_display");
-            const demoRendering = document.getElementById("demoRendering");
-            const math = MathJax.Hub.getAllJax("source")[0];
-            // console.log(math);
-            source.addEventListener("input", function() {
-              MathJax.Hub.Queue(["Text", math, source.value]);
-            }
-            );
-          });
+          })
         }
-      };
+      }
     </script>
-    <!-- <script>
-      window.MathJax = {
-        "fast-preview": {
-          disabled: true
-        },
-        AuthorInit: function() {
-          MathJax.Hub.Register.StartupHook("End", function() {
-            MathJax.Hub.processSectionDelay = 0;
-          }
-    </script> -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
       async
@@ -39,14 +41,14 @@
     <title>Calculator</title>
   </head>
   <body>
-    <input type="text">
+    <input id="texInput" type="text">
     <div class="calculator">
-      <div id="displayID" class="calculator_display">$  $</div>
+      <div id="displayID" class="calculator_display">$ $</div>
       <div class="calculator_keys">
         <button class="operator" data-action="+">+</button>
         <button class="operator" data-action="-">-</button>
-        <button class="operator" data-action="*">&times;</button>
-        <button class="operator" data-action="/">÷</button>
+        <button class="operator" data-action="{\times}">&times;</button>
+        <button class="operator" data-action="{\div}">÷</button>
 
         <button>7</button>
         <button>8</button>
@@ -62,7 +64,7 @@
         <button data-action="decimal">.</button>
         <button data-action="clear">c</button>
         <button data-action="calculate">=</button>
-        <button id="fractiontest" data-action="frac">$ 1 \over 2 $</button>
+        <button id="fractiontest" data-action="frac">$ \frac {\square} {\square} $</button>
       </div>
     </div>
     <script type="module" src="bundle.js"></script>

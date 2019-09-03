@@ -33,6 +33,7 @@ const nearley = require("nearley");
 const grammar = require("./grammar.js");
 const mathjax = require("mathjax");
 
+// MathJax configuration
 MathJax.Hub.Config({
   TeX: {
     Macros: {
@@ -45,6 +46,7 @@ MathJax.Hub.Config({
   }
 });
 
+// Parse function for the equals-key
 function parse(str) {
   const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
   try {
@@ -57,19 +59,19 @@ function parse(str) {
 
 const calculator = document.querySelector(".calculator");
 const keys = calculator.querySelector(".calculator_keys");
-
-let displayRaw = "";
 const display = document.querySelector(".calculator_display");
-let dispRender = null;
-
+// Collects Tex-Input after every buttonpress on the calculator so that the Mathjax rendering can be updated
+let displayRaw = document.querySelector("#texInput");
+let dispRender = null; // Global definition of so that the following localized variable assignment writes into the global scope
+// Assignment of the dispRender variable:
 MathJax.Hub.Queue(function() {
   dispRender = MathJax.Hub.getAllJax("display")[0];
 });
 
-function updateDisplayContent(newContent) {
-  displayRaw += newContent;
-  MathJax.Hub.Queue(["Text", dispRender, displayRaw]);
-  console.log(displayRaw);
+function updateRenderDisplay(newContent) {
+  displayRaw.value += newContent;
+  MathJax.Hub.Queue(["Text", dispRender, displayRaw.value]);
+  console.log(displayRaw.value);
 }
 
 keys.addEventListener("click", event => {
@@ -78,31 +80,36 @@ keys.addEventListener("click", event => {
 
   if (key.matches("button")) {
     if (!action) {
-      updateDisplayContent("{"+key.textContent+"}")
+      updateRenderDisplay(key.textContent);
     } else {
       if (key.className === "operator") {
         // display.textContent += action;
-        updateDisplayContent(action)
+        updateRenderDisplay(action);
       }
       if (action === "decimal") {
         // display.textContent += ".";
-        updateDisplayContent(".")
+        updateRenderDisplay(".");
       }
       if (action === "clear") {
         // display.textContent = "";
-        displayRaw = "";
-        MathJax.Hub.Queue(["Text", dispRender, displayRaw])
+        displayRaw.value = "";
+        MathJax.Hub.Queue(["Text", dispRender, displayRaw.value]);
       }
       if (action === "frac") {
         // display.textContent += "$1 \\over 2$";
-        updateDisplayContent("{1 \\over 2}");
+        updateRenderDisplay("{\\frac {} {}}");
       }
       if (action === "calculate") {
-        display.textContent = parse(display.textContent);
+        displayRaw.value = parse(displayRaw.value);
+        MathJax.Hub.Queue(["Text", dispRender, displayRaw.value]);
       }
     }
   }
 });
+
+displayRaw.addEventListener("input", event => {
+  updateRenderDisplay("")
+})
 
 },{"./grammar.js":1,"mathjax":3,"nearley":4}],3:[function(require,module,exports){
 /* -*- Mode: Javascript; indent-tabs-mode:nil; js-indent-level: 2 -*- */
