@@ -1,9 +1,11 @@
 const nearley = require("nearley");
 const grammar = require("./grammar.js");
 const mathjax = require("mathjax");
+import "./node_modules/mathquill/build/mathquill.js"
 
 // MathJax configuration
 MathJax.Hub.Config({
+  showMathMenu: false, 
   TeX: {
     Macros: {
       RR: "{\\bf R}",
@@ -17,7 +19,7 @@ MathJax.Hub.Config({
 
 // Parse function for the equals-key
 function parse(str) {
-  const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
+  const parser = new Parser(Grammar.fromCompiled(grammar));
   try {
     parser.feed(str);
     return parser.results;
