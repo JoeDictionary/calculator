@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script>
+
+    <!-- MAathjax configuration -->
+    <!-- <script>
       window.MathJax = {
         "fast-preview": {
           disabled: true
@@ -12,19 +14,23 @@
           });
         }
       };
-    </script>
-    <script
+    </script> -->
+
+    <!-- MAthJax CDN -->
+    <!-- <script
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"
       async
-    ></script>
+    ></script> -->
+
+
     <link rel="stylesheet" href="style.css" />
     <title>Calculator</title>
   </head>
+
   <body>
     <p><span id="mathTest"></span></p>
-    <input id="texInput" type="text" />
     <div class="calculator">
-      <div id="displayID" class="calculator_display"></div>
+      <div class="calculator_display"><span id="mathDisplay"></span></div>
       <div class="calculator_keys">
         <button class="operator" data-action="+">+</button>
         <button class="operator" data-action="-">-</button>
@@ -45,10 +51,16 @@
         <button data-action="decimal">.</button>
         <button data-action="clear">c</button>
         <button data-action="calculate">=</button>
-        <button id="fractiontest" data-action="frac">
-          $ \frac {\square} {\square} $
-        </button>
+        <button id="fractiontest" data-action="frac">Fraction</button>
       </div>
     </div>
   </body>
+  
+  <!-- MathQuill requirements and loading -->
+  <link rel="stylesheet" href="./node_modules/mathquill/build/mathquill.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="./node_modules/mathquill/build/mathquill.js"></script>
+
+  <!-- Main js file -->
+  <script type="module" src="bundle.js"></script>
 </html>

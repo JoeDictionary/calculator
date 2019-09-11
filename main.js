@@ -1,23 +1,9 @@
 const nearley = require("nearley");
 const grammar = require("./grammar.js");
-const mathjax = require("mathjax");
-import "./node_modules/mathquill/build/mathquill.js"
 
-// MathJax configuration
-MathJax.Hub.Config({
-  showMathMenu: false, 
-  TeX: {
-    Macros: {
-      RR: "{\\bf R}",
-      bold: ["{\\bf #1}", 1]
-    }
-  },
-  tex2jax: {
-    inlineMath: [["$", "$"]]
-  }
-});
+const MQ = MathQuill.getInterface(2)
 
-// Parse function for the equals-key
+// Parse function for equals-key
 function parse(str) {
   const parser = new Parser(Grammar.fromCompiled(grammar));
   try {
@@ -28,22 +14,24 @@ function parse(str) {
   }
 }
 
+
+
 const calculator = document.querySelector(".calculator");
 const keys = calculator.querySelector(".calculator_keys");
 const display = document.querySelector(".calculator_display");
-// Collects Tex-Input after every buttonpress on the calculator so that the Mathjax rendering can be updated
-let displayRaw = document.querySelector("#texInput");
-let dispRender = null; // Global definition of so that the following localized variable assignment writes into the global scope
-// Assignment of the dispRender variable:
-MathJax.Hub.Queue(function() {
-  dispRender = MathJax.Hub.getAllJax("display")[0];
-});
+const mathDisplay = document.querySelector("#mathDisplay")
 
-function updateRenderDisplay(newContent) {
-  displayRaw.value += newContent;
-  MathJax.Hub.Queue(["Text", dispRender, displayRaw.value]);
-  console.log(displayRaw.value);
-}
+const mathField = MQ.MathField(mathDisplay, {
+    spaceBehavesLikeTab: true,
+    sumStartsWithNEquals: true,
+    supSubsRequireOperand: true,
+    autoCommands : "pi sum",
+    // maxDepth: 10,
+    // autoOperatorNames: "sin cos"
+    handlers:{
+      enter: () => console.log(mathField.latex())
+    }
+})
 
 keys.addEventListener("click", event => {
   const key = event.target;
@@ -51,33 +39,17 @@ keys.addEventListener("click", event => {
 
   if (key.matches("button")) {
     if (!action) {
-      updateRenderDisplay(key.textContent);
     } else {
       if (key.className === "operator") {
-        // display.textContent += action;
-        updateRenderDisplay(action);
       }
       if (action === "decimal") {
-        // display.textContent += ".";
-        updateRenderDisplay(".");
       }
       if (action === "clear") {
-        // display.textContent = "";
-        displayRaw.value = "";
-        MathJax.Hub.Queue(["Text", dispRender, displayRaw.value]);
       }
       if (action === "frac") {
-        // display.textContent += "$1 \\over 2$";
-        updateRenderDisplay("{\\frac {} {}}");
       }
       if (action === "calculate") {
-        displayRaw.value = parse(displayRaw.value);
-        MathJax.Hub.Queue(["Text", dispRender, displayRaw.value]);
       }
     }
   }
 });
-
-displayRaw.addEventListener("input", event => {
-  updateRenderDisplay("")
-})
