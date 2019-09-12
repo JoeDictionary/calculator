@@ -1,4 +1,3 @@
-@{% const renderToken = "$" %}
 
 input -> expression {% data => eval(data[0]) %}
 

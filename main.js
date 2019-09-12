@@ -1,6 +1,8 @@
 const nearley = require("nearley");
 const grammar = require("./grammar.js");
 
+console.log("Hello");
+
 const MQ = MathQuill.getInterface(2)
 
 // Parse function for equals-key
