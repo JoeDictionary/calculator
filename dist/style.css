@@ -1,0 +1,48 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column nowrap;
+
+}
+
+.calculator {
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 2em;
+  max-width: 15em;
+}
+
+.calculator_display {
+  color: white;
+  font-size: 1.7em;
+  text-align: right;
+  background-color: gray;
+  padding: 10px;
+  min-height: 2em
+}
+
+.calculator_keys {
+  background-color: #999;
+  display: grid;
+  grid-gap: 1px;
+  flex-flow: column nowrap;
+  grid-template-columns: repeat(4, 1fr)
+
+}
+
+.calculator_keys > * {
+  background-color: #fff;
+  text-align: center;
+  padding: 0.5em 1.25em;
+}

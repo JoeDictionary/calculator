@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "watchify main.js -o bundle.js",
-    "gen_parser": "nearleyc ./src/grammar.ne -o grammar.js"
+    "gen_parser": "nearleyc grammar.ne -o grammar.js"
   },
   "keywords": [],
   "author": "",
@@ -14,10 +14,13 @@
     "express": "^4.17.1",
     "mathjax": "^2.7.5",
     "mathquill": "^0.10.1-a",
-    "nearley": "^2.18.0"
+    "nearley": "^2.19.0"
   },
   "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "browserify": "^16.5.0",
     "gulp": "^4.0.2",
-    "gulp-run-command": "0.0.9"
+    "gulp-exec": "^4.0.0",
+    "vinyl-source-stream": "^2.0.0"
   }
 }

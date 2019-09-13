@@ -1,4 +1,4 @@
-// Generated automatically by nearley, version 2.18.0
+// Generated automatically by nearley, version 2.19.0
 // http://github.com/Hardmath123/nearley
 (function () {
 function id(x) { return x[0]; }
@@ -8,8 +8,10 @@ var grammar = {
     {"name": "input", "symbols": ["expression"], "postprocess": data => eval(data[0])},
     {"name": "expression", "symbols": ["expression", "operator", "number"], "postprocess": data => data.join("")},
     {"name": "expression", "symbols": ["number"], "postprocess": id},
-    {"name": "operator", "symbols": [{"literal":"*"}], "postprocess": id},
-    {"name": "operator", "symbols": [{"literal":"/"}], "postprocess": id},
+    {"name": "operator$string$1", "symbols": [{"literal":"\\"}, {"literal":"t"}, {"literal":"i"}, {"literal":"m"}, {"literal":"e"}, {"literal":"s"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "operator", "symbols": ["operator$string$1"], "postprocess": _ => "*"},
+    {"name": "operator$string$2", "symbols": [{"literal":"\\"}, {"literal":"d"}, {"literal":"i"}, {"literal":"v"}], "postprocess": function joiner(d) {return d.join('');}},
+    {"name": "operator", "symbols": ["operator$string$2"], "postprocess": _ => "/"},
     {"name": "operator", "symbols": [{"literal":"+"}], "postprocess": id},
     {"name": "operator", "symbols": [{"literal":"-"}], "postprocess": id},
     {"name": "number", "symbols": ["digits"], "postprocess": id},

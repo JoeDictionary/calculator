@@ -1,5 +1,5 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-// Generated automatically by nearley, version 2.18.0
+// Generated automatically by nearley, version 2.19.0
 // http://github.com/Hardmath123/nearley
 (function () {
 function id(x) { return x[0]; }
@@ -32,7 +32,7 @@ if (typeof module !== 'undefined'&& typeof module.exports !== 'undefined') {
 
 },{}],2:[function(require,module,exports){
 const nearley = require("nearley");
-const grammar = require("./grammar.js");
+const grammar = require("./dist/grammar.js");
 
 const MQ = MathQuill.getInterface(2);
 
@@ -91,7 +91,7 @@ keys.addEventListener("click", event => {
   }
 });
 
-},{"./grammar.js":1,"nearley":3}],3:[function(require,module,exports){
+},{"./dist/grammar.js":1,"nearley":3}],3:[function(require,module,exports){
 (function(root, factory) {
     if (typeof module === 'object' && module.exports) {
         module.exports = factory();
@@ -438,7 +438,7 @@ keys.addEventListener("click", event => {
         var lastColumn = this.table[lastColumnIndex];
         var expectantStates = lastColumn.states
             .filter(function(state) {
-                const nextSymbol = state.rule.symbols[state.dot];
+                var nextSymbol = state.rule.symbols[state.dot];
                 return nextSymbol && typeof nextSymbol !== "string";
             });
         
@@ -447,7 +447,7 @@ keys.addEventListener("click", event => {
         // If there is more than one derivation, we only display the first one.
         var stateStacks = expectantStates
             .map(function(state) {
-                const stacks = this.buildStateStacks(state, []);
+                var stacks = this.buildStateStacks(state, []);
                 return stacks[0];
             }, this);
         // Display each state that is expecting a terminal symbol next.
