@@ -32,7 +32,8 @@ if (typeof module !== 'undefined'&& typeof module.exports !== 'undefined') {
 
 },{}],2:[function(require,module,exports){
 const nearley = require("nearley");
-const grammar = require("./dist/grammar.js");
+const grammar = require("./grammar.js");
+console.log("Hello");
 
 const MQ = MathQuill.getInterface(2);
 
@@ -91,7 +92,7 @@ keys.addEventListener("click", event => {
   }
 });
 
-},{"./dist/grammar.js":1,"nearley":3}],3:[function(require,module,exports){
+},{"./grammar.js":1,"nearley":3}],3:[function(require,module,exports){
 (function(root, factory) {
     if (typeof module === 'object' && module.exports) {
         module.exports = factory();
