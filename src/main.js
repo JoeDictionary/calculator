@@ -1,6 +1,5 @@
 const nearley = require("nearley");
 const grammar = require("./grammar.js");
-console.log("h");
 
 const MQ = MathQuill.getInterface(2);
 

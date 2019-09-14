@@ -4,17 +4,22 @@ const source = require("vinyl-source-stream");
 const exec = require("child_process").exec;
 const browserSync = require("browser-sync").create();
 
-const destination = "./dist/";
+const destDir = "./dist/";
 const srcDir = "./src/";
 
 const mainJs = "main.js";
-const to_copy = ["./src/main.js", "./src/index.html", "./src/style.css"];
+const to_copy =
+[
+  // "./src/main.js",
+  "./src/index.html",
+  "./src/style.css"
+];
 
 
 
 function gen_parser(callback) {
   exec(
-    "npx nearleyc " + srcDir + "grammar.ne -o " + destination + "grammar.js",
+    "npx nearleyc " + srcDir + "grammar.ne -o " + srcDir + "grammar.js",
     function(err, stdout, stderr) {
       console.log(stdout);
       console.log(stderr);
@@ -26,8 +31,9 @@ function gen_parser(callback) {
 
 
 function copy(file) {
-  return gulp.src(file).pipe(gulp.dest(destination));
+  return gulp.src(file).pipe(gulp.dest(destDir));
 }
+
 
 
 // https://github.com/browserify/browserify#usage
@@ -36,13 +42,13 @@ function my_browserify() {
   return browserify({
     entries: [mainJs],
     // require: "./dist/grammar.js",
-    basedir: destination,
+    basedir: srcDir,
     fullPaths: true,
     debug: true
 })
     .bundle()
     .pipe(source("bundle.js"))
-    .pipe(gulp.dest(destination));
+    .pipe(gulp.dest(destDir));
 }
 
 
@@ -59,8 +65,8 @@ function watch() {
   gulp.series(copy_all, gen_parser, my_browserify)
   gulp.watch(srcDir + "*.ne", gulp.series(gen_parser, my_browserify));
   gulp.watch(srcDir + "*.js", gulp.series(copy_all, my_browserify));
-  gulp.watch(srcDir + "*.html", gulp.series(copy_all));
-  gulp.watch(srcDir + "*.css", gulp.series(copy_all))
+  gulp.watch([srcDir + "*.html", srcDir + "*.css"], gulp.series(copy_all));
+  // gulp.watch(srcDir + "*.css", gulp.series(copy_all))
 }
 
 
