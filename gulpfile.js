@@ -7,8 +7,10 @@ const browserSync = require("browser-sync").create();
 const destination = "./dist/";
 const srcDir = "./src/";
 
-const mainJs = srcDir + "main.js";
+const mainJs = "main.js";
 const to_copy = ["./src/main.js", "./src/index.html", "./src/style.css"];
+
+
 
 function gen_parser(callback) {
   exec(
@@ -21,16 +23,29 @@ function gen_parser(callback) {
   );
 }
 
+
+
 function copy(file) {
-  return gulp.src(file).pipe(gulp.dest("./dist"));
+  return gulp.src(file).pipe(gulp.dest(destination));
 }
 
+
+// https://github.com/browserify/browserify#usage
+// https://coderwall.com/p/0vlbxq/using-gulp-with-browserify-and-watchify
 function my_browserify() {
-  return browserify(mainJs, { basedir: destination })
+  return browserify({
+    entries: [mainJs],
+    // require: "./dist/grammar.js",
+    basedir: destination,
+    fullPaths: true,
+    debug: true
+})
     .bundle()
-    .pipe(source("./bundle.js"))
+    .pipe(source("bundle.js"))
     .pipe(gulp.dest(destination));
 }
+
+
 
 async function copy_all() {
   to_copy.forEach(file => {
@@ -39,15 +54,17 @@ async function copy_all() {
   await Promise.resolve("ignore");
 }
 
+
 function watch() {
-  // gulp.series(copy_all, gen_parser, my_browserify);
+  gulp.series(copy_all, gen_parser, my_browserify)
   gulp.watch(srcDir + "*.ne", gulp.series(gen_parser, my_browserify));
   gulp.watch(srcDir + "*.js", gulp.series(copy_all, my_browserify));
   gulp.watch(srcDir + "*.html", gulp.series(copy_all));
-  gulp.watch(srcDir + "*.css", gulp.series(copy_all));
-  // gulp.watch("./*.css", gulp.series(copy_to_destination("./style.css")))
+  gulp.watch(srcDir + "*.css", gulp.series(copy_all))
 }
 
+
+exports.rebuild = gulp.series(copy_all, gen_parser, my_browserify)
 exports.copy_all = copy_all;
 exports.copy = copy;
 exports.my_browserify = my_browserify;
