@@ -39,19 +39,30 @@ keys.addEventListener("click", event => {
 
   if (key.matches("button")) {
     if (!action) {
-      mathField.write(key.textContent)
+      mathField.write(key.textContent);
       console.log(mathField.latex());
+      mathField.focus();
     } else {
       if (action != "clear" && action != "calculate") {
-        mathField.write(action)
+        mathField.write(action);
         console.log(mathField.latex());
-      }
-      else{
+        mathField.focus();
+        if (key.dataset.backspace === "1") {
+          mathField.keystroke("Left")
+        } else {
+          if (key.dataset.backspace === "2") {
+            mathField.keystroke("Left")
+            mathField.keystroke("Left")
+          }
+        }
+      } else {
         if (action === "clear") {
-          mathField.latex("")
+          mathField.latex("");
+          mathField.focus();
         }
         if (action === "calculate") {
           mathField.latex(parse(mathField.latex()));
+          mathField.focus();
         }
       }
     }

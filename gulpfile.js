@@ -36,6 +36,15 @@ function copy(file) {
 
 
 
+async function copy_all() {
+  to_copy.forEach(file => {
+    copy(file);
+  });
+  await Promise.resolve("ignore");
+}
+
+
+
 // https://github.com/browserify/browserify#usage
 // https://coderwall.com/p/0vlbxq/using-gulp-with-browserify-and-watchify
 function my_browserify() {
@@ -53,21 +62,13 @@ function my_browserify() {
 
 
 
-async function copy_all() {
-  to_copy.forEach(file => {
-    copy(file);
-  });
-  await Promise.resolve("ignore");
-}
-
-
 function watch() {
-  gulp.series(copy_all, gen_parser, my_browserify)
-  gulp.watch(srcDir + "*.ne", gulp.series(gen_parser, my_browserify));
+  gulp.series([copy_all, gen_parser, my_browserify])
+  gulp.watch(srcDir + "*.ne", gulp.series([gen_parser, my_browserify]));
   gulp.watch(srcDir + "*.js", gulp.series(copy_all, my_browserify));
   gulp.watch([srcDir + "*.html", srcDir + "*.css"], gulp.series(copy_all));
-  // gulp.watch(srcDir + "*.css", gulp.series(copy_all))
 }
+
 
 
 exports.rebuild = gulp.series(copy_all, gen_parser, my_browserify)

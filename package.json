@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "watch": "watchify main.js -o bundle.js",
-    "gen_parser": "nearleyc grammar.ne -o grammar.js"
+    "gen_parser": "nearleyc ./src/grammar.ne -o ./src/grammar.js"
   },
   "keywords": [],
   "author": "",
