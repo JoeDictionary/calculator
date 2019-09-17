@@ -47,12 +47,12 @@ keys.addEventListener("click", event => {
         mathField.write(action);
         console.log(mathField.latex());
         mathField.focus();
-        if (key.dataset.backspace === "1") {
+        console.log(key.dataset);
+        if (key.dataset.left === "1") {
           mathField.keystroke("Left")
         } else {
-          if (key.dataset.backspace === "2") {
-            mathField.keystroke("Left")
-            mathField.keystroke("Left")
+          if (key.dataset.left === "2") {
+            mathField.keystroke("Left Left")
           }
         }
       } else {

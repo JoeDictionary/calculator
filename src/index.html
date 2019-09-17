@@ -32,28 +32,29 @@
     <div class="calculator">
       <div class="calculator_display"><span id="mathDisplay"></span></div>
       <div class="calculator_keys">
-        <button class="operator" data-action="+">+</button>
-        <button class="operator" data-action="-">-</button>
-        <button class="operator" data-action="\times">&times;</button>
-        <button class="operator" data-action="\div">÷</button>
+        <button id="plus" class="operator" data-action="+">+</button>
+        <button id="minus" class="operator" data-action="-">-</button>
+        <button id="mult" class="operator" data-action="\times">&times;</button>
+        <button id="div" class="operator" data-action="\div">÷</button>
 
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>0</button>
+        <button id="7">7</button>
+        <button id="8">8</button>
+        <button id="9">9</button>
+        <button id="4">4</button>
+        <button id="5">5</button>
+        <button id="6">6</button>
+        <button id="1">1</button>
+        <button id="2">2</button>
+        <button id="3">3</button>
+        <button id="0">0</button>
 
-        <button data-action=".">.</button>
-        <button data-action="clear">c</button>
-        <button data-action="calculate">=</button>
-        <button data-backspace="2" data-action="\frac{}{}">&frac12</button>
-        <button data-backspace="1" data-action="\sqrt{}">&radic</button>
-        <button data-backspace="1" data-action="\log\left(\right)">log</button>
+        <button id="decimal" data-action=".">.</button>
+        <button id="AC" data-action="clear">AC</button>
+        <button id="euqals" data-action="calculate">=</button>
+        <button id="frac" data-left="2" data-action="\frac{}{}">&frac12</button>
+        <button id="sqrt" data-left="1" data-action="\sqrt{}">&radic</button>
+        <button id="log" data-left="1" data-action="\log\left(\right)">log</button>
+        <button id="del" data-action="delete">DEL</button>
       </div>
     </div>
   </body>
