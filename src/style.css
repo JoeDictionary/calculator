@@ -38,7 +38,6 @@ body {
   grid-gap: 1px;
   flex-flow: column nowrap;
   grid-template-columns: repeat(4, 1fr)
-
 }
 
 .calculator_keys > * {
